@@ -98,9 +98,13 @@ const littleSound = new Audio('littleSound.mp3')
 
 moveElement(ship1, 100, 100)
 
-let prevMouseHeading = 0
-const maxAngleChange = 5
-
+function calcMaxRateHeadingDelta(currentHeading, targetHeading, dt, degreesPerMili) {
+    const deltaHeading = -(currentHeading - targetHeading)
+    console.log("deltaHeading: " + deltaHeading)
+    const maxDegreesThisLoop = degreesPerMili * dt
+    const headingChange = coerceIn(-maxDegreesThisLoop, maxDegreesThisLoop, deltaHeading) //coerceIn(-5, 5, (halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship))) % 360)
+    return headingChange
+}
 
 function updateShip(ship, target, dt) {
 
@@ -109,10 +113,11 @@ function updateShip(ship, target, dt) {
 
     const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
 
-    const headingToMouse = radToDeg(-Math.atan2(mouseX - shipPos.x, mouseY - shipPos.y))
-    const headingChange = coerceIn(-5, 5, (halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship))) % 360)
+    const headingToMouse = 180 + radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))
 
-    const newShipPos = calcVector(0, 0, magnitude, headingChange)
+    const headingChange = calcMaxRateHeadingDelta(halfToFullCircle(getAngle(ship)), headingToMouse, dt, .09)
+
+    const newShipPos = calcVector(0, 0, magnitude, headingToMouse)
 
     // moveElement(ship, newShipPos.x, newShipPos.y)
     // positionElement(ship, newShipPos.x, newShipPos.y)
