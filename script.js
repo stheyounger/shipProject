@@ -24,23 +24,22 @@ function positionElement(element, x, y) {
 //2215550100, 2215550101 - 197358  - James
 
 function setElementHeading(element, degrees) {
-    element.style.rotate = degrees + "deg"
+    element.style.transform = "rotate(" + degrees + "deg)"
 }
 
 function rotateElement(element, degrees) {
-    const style = getComputedStyle(element)
-    element.style.rotate = parseInt(style.rotate) + degrees + "deg"
+    setElementHeading(element, getAngle(element) + degrees)
 }
 
-function moveShipToward(ship, x, y, speed) {
-    const degrees = Math.atan2(ship.style.left, ship.style.top, x, y)
-    const intermediatePoint = calcVector(ship.style.left, ship.style.top, speed, degrees)
+// function moveShipToward(ship, x, y, speed) {
+//     const degrees = Math.atan2(ship.style.left, ship.style.top, x, y)
+//     const intermediatePoint = calcVector(ship.style.left, ship.style.top, speed, degrees)
 
-    moveElement(ship, intermediatePoint.x, intermediatePoint.y)
-}
+//     moveElement(ship, intermediatePoint.x, intermediatePoint.y)
+// }
 
 function getElementPosition(element) {
-    return { x: parseInt(ship.style.left), y: parseInt(ship.style.top) }
+    return { x: parseInt(element.style.left), y: parseInt(element.style.top) }
 }
 
 function degToRad(degrees) {
@@ -132,4 +131,31 @@ gameLoop(10, () => {
 window.onmousemove = function(event) {
     mouseY = event.clientY
     mouseX = event.clientX
+}
+
+function getAngle(element) {
+    var style = window.getComputedStyle(element, null);
+    var transform = style.getPropertyValue("transform")
+
+    // With rotate(30deg)...
+    // matrix(0.866025, 0.5, -0.5, 0.866025, 0px, 0px)
+    // console.log('Matrix: ' + transform);
+
+    // rotation matrix - http://en.wikipedia.org/wiki/Rotation_matrix
+
+    var values = transform.split('(')[1];
+    values = values.split(')')[0];
+    values = values.split(',');
+    var a = values[0];
+    var b = values[1];
+    var c = values[2];
+    var d = values[3];
+
+    var scale = Math.sqrt(a * a + b * b);
+
+    // arc sin, convert from radians to degrees, round
+    // DO NOT USE: see update below
+    var sin = b / scale;
+    var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+    return angle
 }
