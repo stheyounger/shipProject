@@ -6,8 +6,11 @@ function gameLoop(loopTime, action) {
 }
 
 function moveElement(element, x, y) {
-    // positionElement(element, parseInt(element.style.left), parseInt(element.style.top))
+    // const elementPos = getElementPosition(element)
+    // positionElement(element, elementPos.x + x, elementPos.y + y)
 
+    // console.log("x: " + elementPos.x)
+    // console.log("xComputedrn: " + element.style.left)
     const style = getComputedStyle(element)
     if (x <= window.innerWidth) {
         element.style.left = parseInt(style.left) + x + "px"
@@ -18,6 +21,7 @@ function moveElement(element, x, y) {
 }
 
 function positionElement(element, x, y) {
+    // console.log("pos: " + x + ", " + y)
     element.style.left = x + "px"
     element.style.top = y + "px"
 }
