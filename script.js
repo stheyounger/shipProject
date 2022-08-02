@@ -98,8 +98,8 @@ function updateShip(ship) {
 
     const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
 
-    const headingToMouse = (radToDeg(-Math.atan2(mouseX - shipPos.x, mouseY - shipPos.y))) % 360
-    const headingChange = coerceIn(-5, 5, halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship)))
+    const headingToMouse = radToDeg(-Math.atan2(mouseX - shipPos.x, mouseY - shipPos.y))
+    const headingChange = coerceIn(-5, 5, (halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship))) % 360)
 
     const newShipPos = calcVector(0, 0, magnitude, headingChange)
 
