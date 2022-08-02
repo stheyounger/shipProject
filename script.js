@@ -1,5 +1,10 @@
+let prevTime = 0
+
 function gameLoop(loopTime, action) {
-    action();
+    const currentTime = Date.now()
+    const dt = currentTime - prevTime
+    prevTime = currentTime
+    action(dt);
 
     if (!endGameLoop)
         setTimeout(() => { gameLoop(loopTime, action) }, loopTime)
@@ -97,7 +102,7 @@ let prevMouseHeading = 0
 const maxAngleChange = 5
 
 
-function updateShip(ship) {
+function updateShip(ship, target, dt) {
 
     const shipPos = getPositionAtCenter(ship)
 
@@ -113,6 +118,9 @@ function updateShip(ship) {
     // positionElement(ship, newShipPos.x, newShipPos.y)
     rotateElement(ship, headingChange)
 
+
+    console.log("dt: " + dt)
+        // console.log("delta Heading: " + deltaHeading)
     // console.log("magnitude: " + magnitude)
     // console.log("diff" + headingToMouse - prevHeading % 360)
     console.log("headingChange: " + headingChange)
@@ -122,8 +130,8 @@ function updateShip(ship) {
         // console.log("mouse pos: " + mouseX + ", " + mouseY)
 }
 
-gameLoop(100, () => {
-    updateShip(ship1)
+gameLoop(100, (dt) => {
+    updateShip(ship1, { x: mouseX, y: mouseY }, dt)
 })
 
 
