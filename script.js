@@ -126,8 +126,8 @@ function updateShip(ship, target, dt) {
 
     console.log("dt: " + dt)
         // console.log("delta Heading: " + deltaHeading)
-    // console.log("magnitude: " + magnitude)
-    // console.log("diff" + headingToMouse - prevHeading % 360)
+        // console.log("magnitude: " + magnitude)
+        // console.log("diff" + headingToMouse - prevHeading % 360)
     console.log("headingChange: " + headingChange)
     console.log("degreesToMouse: " + headingToMouse)
     console.log("current angle : " + getAngle(ship))
@@ -140,27 +140,27 @@ gameLoop(100, (dt) => {
 })
 
 
-// document.onkeydown = function(event) {
-//     switch (event.key) {
-//         case "w":
-//             moveElement(ship, 0, -5)
-//             break;
-//         case "a":
-//             moveElement(ship, -5, 0)
-//             break;
-//         case "s":
-//             moveElement(ship, 0, 5)
-//             break;
-//         case "d":
-//             moveElement(ship, 5, 0)
-//             break;
-//         case " ":
-//             littleSound.play();
-//             break;
-//         case "q":
-//             endGameLoop = true
-//     }
-// };
+document.onkeydown = function(event) {
+    switch (event.key) {
+        // case "w":
+        //     moveElement(ship, 0, -5)
+        //     break;
+        // case "a":
+        //     moveElement(ship, -5, 0)
+        //     break;
+        // case "s":
+        //     moveElement(ship, 0, 5)
+        //     break;
+        // case "d":
+        //     moveElement(ship, 5, 0)
+        //     break;
+        case " ":
+            littleSound.play();
+            break;
+        case "q":
+            endGameLoop = true
+    }
+};
 window.onmousemove = function(event) {
     mouseY = event.clientY
     mouseX = event.clientX
