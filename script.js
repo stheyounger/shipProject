@@ -97,6 +97,7 @@ const littleSound = new Audio('littleSound.mp3')
 
 
 moveElement(ship1, 100, 100)
+setElementHeading(ship1, mouseX, mouseY)
 
 function calcMaxRateHeadingDelta(currentHeading, targetHeading, dt, degreesPerMili) {
     const deltaHeading = -(currentHeading - targetHeading)
@@ -120,7 +121,6 @@ function updateShip(ship, target, dt) {
     const newShipPos = calcVector(0, 0, magnitude, headingToMouse)
 
     // moveElement(ship, newShipPos.x, newShipPos.y)
-    // positionElement(ship, newShipPos.x, newShipPos.y)
     rotateElement(ship, headingChange)
 
 
