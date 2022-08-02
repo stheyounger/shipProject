@@ -112,15 +112,16 @@ function updateShip(ship, target, dt) {
     const shipPos = getPositionAtCenter(ship)
 
 
-    const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
+    const magnitude = coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
 
-    const headingToMouse = 180 + radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))
+    const headingToMouse = radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))
+    const currentHeading = halfToFullCircle(getAngle(ship))
 
-    const headingChange = calcMaxRateHeadingDelta(halfToFullCircle(getAngle(ship)), headingToMouse, dt, .09)
+    const headingChange = calcMaxRateHeadingDelta(currentHeading, 180 + headingToMouse, dt, .09)
 
-    const newShipPos = calcVector(0, 0, magnitude, headingToMouse)
+    const newShipPos = calcVector(0, 0, magnitude, 90 + headingToMouse)
 
-    // moveElement(ship, newShipPos.x, newShipPos.y)
+    moveElement(ship, newShipPos.x, newShipPos.y)
     rotateElement(ship, headingChange)
 
 
@@ -139,8 +140,8 @@ gameLoop(100, (dt) => {
     updateShip(ship1, { x: mouseX, y: mouseY }, dt)
 })
 
-
 document.onkeydown = function(event) {
+
     switch (event.key) {
         // case "w":
         //     moveElement(ship, 0, -5)
@@ -161,6 +162,7 @@ document.onkeydown = function(event) {
             endGameLoop = true
     }
 };
+
 window.onmousemove = function(event) {
     mouseY = event.clientY
     mouseX = event.clientX
