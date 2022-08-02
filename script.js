@@ -68,46 +68,56 @@ function pointDistance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
 }
 
+function wrapAngle(degrees) {
+    return degrees % 360
+}
 
+function halfToFullCircle(halfCircleDegrees) {
+    return (halfCircleDegrees + 360) % 360
+}
 
 let mouseX = 0
 let mouseY = 0
 let endGameLoop = false
 
-const ship = document.querySelector(".ship1")
-const style = getComputedStyle(ship)
+const ship1 = document.querySelector(".ship1")
 
 const littleSound = new Audio('littleSound.mp3')
 
 
-moveElement(ship, 100, 100)
+moveElement(ship1, 100, 100)
 
-let prevHeading = 0
+let prevMouseHeading = 0
 const maxAngleChange = 5
-gameLoop(10, () => {
+
+
+function updateShip(ship) {
+
     const shipPos = getElementPosition(ship)
 
 
-    const magnitude = coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
+    const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
 
-    const headingToMouse = 90 + radToDeg(-Math.atan2(mouseX - shipPos.x, mouseY - shipPos.y))
-    const newHeading = prevHeading + coerceIn(-maxAngleChange, maxAngleChange, headingToMouse - prevHeading)
-        // const newHeading = coerceIn(prevHeading - maxAngleChange, prevHeading + maxAngleChange, headingToMouse)
-    prevHeading = newHeading
+    const headingToMouse = (radToDeg(-Math.atan2(mouseX - shipPos.x, mouseY - shipPos.y))) % 360
+    const headingChange = coerceIn(-5, 5, halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship)))
 
+    const newShipPos = calcVector(0, 0, magnitude, headingChange)
 
-    const newShipPos = calcVector(shipPos.x, shipPos.y, magnitude, newHeading)
-
-    positionElement(ship, newShipPos.x, newShipPos.y)
-    setElementHeading(ship, newHeading - 225)
-
+    // moveElement(ship, newShipPos.x, newShipPos.y)
+    // positionElement(ship, newShipPos.x, newShipPos.y)
+    rotateElement(ship, headingChange)
 
     // console.log("magnitude: " + magnitude)
     // console.log("diff" + headingToMouse - prevHeading % 360)
-    // console.log("heading: " + newHeading)
-    // console.log("degreesToMouse: " + headingToMouse)
-    // console.log("newShipPos: " + newShipPos)
-    // console.log("mouse pos: " + mouseX + ", " + mouseY)
+    console.log("headingChange: " + headingChange)
+    console.log("degreesToMouse: " + headingToMouse)
+    console.log("current angle : " + getAngle(ship))
+    console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
+        // console.log("mouse pos: " + mouseX + ", " + mouseY)
+}
+
+gameLoop(100, () => {
+    updateShip(ship1)
 })
 
 
