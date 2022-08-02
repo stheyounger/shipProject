@@ -46,6 +46,12 @@ function getElementPosition(element) {
     return { x: parseInt(element.style.left), y: parseInt(element.style.top) }
 }
 
+function getPositionAtCenter(element) {
+    const offset = { x: element.clientWidth / 2, y: element.clientHeight / 2 }
+        // console.log("offset: " + offset.x + ", " + offset.y)
+    return { x: parseInt(element.style.left) - offset.x, y: parseInt(element.style.top) - offset.y }
+}
+
 function degToRad(degrees) {
     return degrees / 180 * Math.PI
 }
@@ -93,7 +99,7 @@ const maxAngleChange = 5
 
 function updateShip(ship) {
 
-    const shipPos = getElementPosition(ship)
+    const shipPos = getPositionAtCenter(ship)
 
 
     const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, mouseX, mouseY))
