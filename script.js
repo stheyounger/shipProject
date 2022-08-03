@@ -57,6 +57,8 @@ function getPositionAtCenter(element) {
     return { x: parseInt(element.style.left) - offset.x, y: parseInt(element.style.top) - offset.y }
 }
 
+const mod = (a, n) => a - Math.floor(a / n) * n
+
 function degToRad(degrees) {
     return degrees / 180 * Math.PI
 }
@@ -81,6 +83,10 @@ function pointDistance(x1, y1, x2, y2) {
 
 function wrapAngle(degrees) {
     return degrees % 360
+}
+
+function angleDiff(a, b) {
+    return mod(((a - b) + 180), 360 - 180)
 }
 
 function halfToFullCircle(halfCircleDegrees) {
