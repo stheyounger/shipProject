@@ -22,12 +22,13 @@ window.onload = () => {
     function createShips(number) {
         const shipList = []
         for (let i = 1; i <= number; i++) {
-            const newShipElement = createImage("ship.png")
-            const ship = new Ship(newShipElement)
+            const newShipHtmlElement = createImage("ship.png")
+            const shipElement = new Element(newShipHtmlElement)
+            const ship = new Ship(shipElement)
             shipList.push(ship)
 
-            newShipElement.classList = "ship"
-            positionElement(newShipElement, Math.random() * 200 + 1, Math.random() * 200 + 1)
+            newShipHtmlElement.classList = "ship"
+            shipElement.positionElement(Math.random() * 200 + 1, Math.random() * 200 + 1)
         }
         return shipList
     }
@@ -63,12 +64,14 @@ window.onload = () => {
         }
     };
 
+
     const body = document.querySelector("body")
-    const mouseFollower = document.querySelector(".mouseFollower")
+    const mouseHtmlFollower = document.querySelector(".mouseFollower")
+    const mouseFollower = new Element(mouseHtmlFollower)
     body.onmousemove = function(event) {
         mouseY += event.movementY
         mouseX += event.movementX
-        positionElement(mouseFollower, mouseX, mouseY)
+        mouseFollower.positionElement(mouseX, mouseY)
     }
     window.onclick = function() {
         littleSound.play();
