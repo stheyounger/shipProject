@@ -11,7 +11,7 @@ function createImage(src) {
 }
 
 // requires an initial rotate()-tion
-function getAngle(element) {
+function getElementAngle(element) {
     var style = window.getComputedStyle(element, null);
     var transform = style.getPropertyValue("transform")
 
@@ -62,7 +62,7 @@ function setElementHeading(element, degrees) {
 }
 
 function rotateElement(element, degrees) {
-    setElementHeading(element, getAngle(element) + degrees)
+    setElementHeading(element, getElementAngle(element) + degrees)
 }
 
 function getElementPosition(element) {
@@ -117,39 +117,28 @@ function smallestHeadingChange(currentHeading, headingToMouse) {
 
 }
 
-function flipAngle(value) {
-    return mod((value + 180), 360)
-}
+class Ship {
+    constructor(element) {
+        this.element = element
+    }
+
+    persue(target, dt) {
+        const shipPos = getPositionAtCenter(this.element)
+
+        const pxPerMili = { min: 0.2, max: 1.3 }
+        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
+
+        const maxDegreePerMili = 0.2
+        const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
+        const currentHeading = getElementAngle(this.element)
+        const anglePerThisCycle = maxDegreePerMili * dt
+        const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, smallestHeadingChange(currentHeading, headingToMouse))
+
+        const shipPosAng = currentHeading + headingChange - 90
+        const newShipPos = calcVector(0, 0, magnitude, shipPosAng)
 
 
-function shipPersue(ship, target, dt) {
-    const shipPos = getPositionAtCenter(ship)
-
-    const pxPerMili = { min: 0.2, max: 1.3 }
-    const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
-
-    const maxDegreePerMili = 0.2
-    const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
-    const currentHeading = getAngle(ship)
-    const anglePerThisCycle = maxDegreePerMili * dt
-    const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, smallestHeadingChange(currentHeading, headingToMouse))
-
-    const shipPosAng = currentHeading + headingChange - 90
-    const newShipPos = calcVector(0, 0, magnitude, shipPosAng)
-
-
-    moveElement(ship, newShipPos.x, newShipPos.y)
-    rotateElement(ship, headingChange)
-
-    // console.log('shipPosAng: ' + shipPosAng)
-    // console.log("heading + change: " + (currentHeading + headingChange))
-    // console.log("dt: " + dt)
-    // console.log("delta Heading: " + deltaHeading)
-    // console.log("magnitude: " + magnitude)
-    // console.log("headingChange: " + headingChange)
-    // console.log("degreesToMouse: " + headingToMouse)
-    // console.log("current angle : " + currentHeading)
-    // console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
-    // console.log("shipPos: " + shipPos.x + ", " + shipPos.y)
-    // console.log("mouse pos: " + target.x + ", " + target.y)
+        moveElement(this.element, newShipPos.x, newShipPos.y)
+        rotateElement(this.element, headingChange)
+    }
 }

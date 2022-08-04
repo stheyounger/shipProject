@@ -19,11 +19,23 @@ window.onload = () => {
 
     const ships = createShips(50)
 
+    function createShips(number) {
+        const shipList = []
+        for (let i = 1; i <= number; i++) {
+            const newShipElement = createImage("ship.png")
+            const ship = new Ship(newShipElement)
+            shipList.push(ship)
+
+            newShipElement.classList = "ship"
+            positionElement(newShipElement, Math.random() * 200 + 1, Math.random() * 200 + 1)
+        }
+        return shipList
+    }
 
     gameLoop(10, (dt) => {
         if (mouseX != 0 && mouseY != 0) {
             ships.forEach((ship) => {
-                shipPersue(ship, { x: mouseX, y: mouseY }, dt)
+                ship.persue({ x: mouseX, y: mouseY }, dt)
             })
         }
     })
