@@ -1,6 +1,11 @@
-.ship1 {
+.ship {
     position: absolute;
     transform: rotate(-1deg);
+    top: 1;
+    left: 1;
+}
+
+.ship2 {
     top: 100;
     left: 100;
 }

@@ -161,52 +161,64 @@ window.onload = () => {
         return (halfCircleDegrees + 360) % 360
     }
 
+    function createShips(number) {
+        const shipList = []
+        for (let i = 1; i <= number; i++) {
+            const newShip = createImage("ship.png")
+            shipList.push(newShip)
+
+            newShip.classList = "ship"
+            positionElement(newShip, Math.random() * 200 + 1, Math.random() * 200 + 1)
+        }
+        return shipList
+    }
+
     let mouseX = 0
     let mouseY = 0
     let endGameLoop = false
 
-    const ship1 = document.querySelector(".ship1")
-
     const littleSound = new Audio('littleSound.mp3')
 
-    moveElement(ship1, 100, 100)
+    const ships = createShips(50)
 
-    function updateShip(ship, target, dt) {
+    function shipPersue(ship, target, dt) {
         const shipPos = getPositionAtCenter(ship)
 
-        const magnitude = coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
+        const pxPerMili = { min: 0.2, max: 1.3 }
+        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
+        const maxDegreePerMili = 0.2
         const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
         const currentHeading = getAngle(ship)
-
-        const anglePerThisCycle = .09 * dt
+        const anglePerThisCycle = maxDegreePerMili * dt
         const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, smallestHeadingChange(currentHeading, headingToMouse))
 
         const shipPosAng = currentHeading + headingChange - 90
         const newShipPos = calcVector(0, 0, magnitude, shipPosAng)
 
 
-        // positionElement(ship, newShipPos.x, newShipPos.y)
         moveElement(ship, newShipPos.x, newShipPos.y)
-
-        // setElementHeading(ship, currentHeading + headingChange)
         rotateElement(ship, headingChange)
 
-        console.log('shipPosAng: ' + shipPosAng)
-        console.log("heading + change: " + (currentHeading + headingChange))
-            // console.log("dt: " + dt)
-            // console.log("delta Heading: " + deltaHeading)
-            // console.log("magnitude: " + magnitude)
-        console.log("headingChange: " + headingChange)
-        console.log("degreesToMouse: " + headingToMouse)
-            // console.log("current angle : " + currentHeading)
-        console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
-            // console.log("shipPos: " + shipPos.x + ", " + shipPos.y)
-            // console.log("mouse pos: " + target.x + ", " + target.y)
+        // console.log('shipPosAng: ' + shipPosAng)
+        // console.log("heading + change: " + (currentHeading + headingChange))
+        // console.log("dt: " + dt)
+        // console.log("delta Heading: " + deltaHeading)
+        // console.log("magnitude: " + magnitude)
+        // console.log("headingChange: " + headingChange)
+        // console.log("degreesToMouse: " + headingToMouse)
+        // console.log("current angle : " + currentHeading)
+        // console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
+        // console.log("shipPos: " + shipPos.x + ", " + shipPos.y)
+        // console.log("mouse pos: " + target.x + ", " + target.y)
     }
 
-    gameLoop(100, (dt) => {
-        updateShip(ship1, { x: mouseX, y: mouseY }, dt)
+    gameLoop(50, (dt) => {
+        if (mouseX != 0 && mouseY != 0) {
+            ships.forEach((ship) => {
+                shipPersue(ship, { x: mouseX, y: mouseY }, dt)
+            })
+        }
     })
 
     document.onkeydown = function(event) {
