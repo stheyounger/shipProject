@@ -8,3 +8,12 @@
 body {
     background-color: #1e1e1e;
 }
+
+.mouseFollower {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 0 20px white;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}

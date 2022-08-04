@@ -232,9 +232,20 @@ window.onload = () => {
         }
     };
 
-    window.onmousemove = function(event) {
-        mouseY = event.clientY
-        mouseX = event.clientX
+    const body = document.querySelector("body")
+    const mouseFollower = document.querySelector(".mouseFollower")
+    body.onmousemove = function(event) {
+        mouseY += event.movementY
+        mouseX += event.movementX
+        positionElement(mouseFollower, mouseX, mouseY)
+    }
+    window.onclick = function() {
+        littleSound.play();
+    }
+
+    body.requestPointerLock = body.requestPointerLock || body.mozRequestPointerLock;
+    body.onclick = function() {
+        body.requestPointerLock();
     }
 
     // requires an initial rotate()-tion
