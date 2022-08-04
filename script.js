@@ -27,15 +27,15 @@ window.onload = () => {
         // const elementPos = getElementPosition(element)
         // positionElement(element, elementPos.x + x, elementPos.y + y)
 
-        // console.log("x: " + elementPos.x)
+        // console.log("x: " + parseInt(element.style.left))
         // console.log("xComputedrn: " + element.style.left)
         const style = getComputedStyle(element)
-        if (x <= window.innerWidth) {
+            // if (x <= window.innerWidth) {
             element.style.left = parseInt(style.left) + x + "px"
-        }
-        if (y <= window.innerHeight) {
+            // }
+            // if (y <= window.innerHeight) {
             element.style.top = parseInt(style.top) + y + "px"
-        }
+            // }
     }
 
     function positionElement(element, x, y) {

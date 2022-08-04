@@ -1,8 +1,8 @@
 .ship1 {
     position: absolute;
     transform: rotate(-1deg);
-    /* top: 100;
-    left: 100; */
+    top: 100;
+    left: 100;
 }
 
 body {
