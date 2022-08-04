@@ -37,7 +37,7 @@ window.onload = () => {
                 shipList.push(ship)
 
                 newShipHtmlElement.classList = "ship"
-                shipElement.positionElement(Math.random() * 200 + 1, Math.random() * 200 + 1)
+                shipElement.positionElement(Math.random() * window.innerWidth + 1, Math.random() * window.innerHeight + 1)
             }
             return shipList
         }
