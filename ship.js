@@ -75,41 +75,6 @@ function getPositionAtCenter(element) {
     return { x: position.x + offset.x, y: position.y + offset.y }
 }
 
-const mod = (a, n) => a - Math.floor(a / n) * n
-
-function degToRad(degrees) {
-    return degrees / 180 * Math.PI
-}
-
-function radToDeg(radians) {
-    return radians * 180 / Math.PI
-}
-
-function calcVector(x, y, magnitude, degrees) {
-    const newX = (magnitude * Math.cos(degToRad(degrees))) + x
-    const newY = (magnitude * Math.sin(degToRad(degrees))) + y
-    return { x: newX, y: newY }
-}
-
-function coerceIn(min, max, value) {
-    return Math.max(min, Math.min(max, value))
-}
-
-function pointDistance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
-}
-
-function wrapAngle(degrees) {
-    return degrees % 360
-}
-
-function getSign(number) {
-    return number / Math.abs(number)
-}
-
-function isPositive(number) {
-    return number > 0
-}
 
 function smallestHeadingChange(currentHeading, headingToMouse) {
 
@@ -156,29 +121,6 @@ function flipAngle(value) {
     return mod((value + 180), 360)
 }
 
-function fullToHalf(fullDegree) {
-    if (fullDegree <= 180) {
-        return fullDegree
-    } else {
-        return -(360 - fullDegree)
-    }
-}
-
-function halfToFullCircle(halfCircleDegrees) {
-    return (halfCircleDegrees + 360) % 360
-}
-
-function createShips(number) {
-    const shipList = []
-    for (let i = 1; i <= number; i++) {
-        const newShip = createImage("ship.png")
-        shipList.push(newShip)
-
-        newShip.classList = "ship"
-        positionElement(newShip, Math.random() * 200 + 1, Math.random() * 200 + 1)
-    }
-    return shipList
-}
 
 function shipPersue(ship, target, dt) {
     const shipPos = getPositionAtCenter(ship)
