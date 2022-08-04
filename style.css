@@ -1,3 +1,32 @@
+body {
+    background-color: #1e1e1e;
+}
+
+.landingPage {
+    margin: auto;
+    display: block;
+}
+
+.startButton {
+    margin-left: 45vw;
+    border: none;
+    border-radius: 20px;
+    background-color: #c32828;
+    height: 4vw;
+    width: 10vw;
+    font-size: 300%;
+    font-family: monospace;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.gamePage {
+    display: none;
+}
+
 .ship {
     position: absolute;
     transform: rotate(-1deg);
@@ -5,17 +34,10 @@
     left: 1;
 }
 
-.ship2 {
-    top: 100;
-    left: 100;
-}
-
-body {
-    background-color: #1e1e1e;
-}
-
 .mouseFollower {
     position: absolute;
+    left: 45vw;
+    top: 1vh;
     background-color: white;
     box-shadow: 0 0 20px white;
     width: 10px;

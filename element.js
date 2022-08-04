@@ -1,12 +1,12 @@
-function createElement(type) {
+function createElement(type, location) {
     const newElement = document.createElement(type)
-    document.body.appendChild(newElement)
+    location.appendChild(newElement)
 
     return newElement
 }
 
-function createImage(src) {
-    const newElement = createElement("img")
+function createImage(src, location) {
+    const newElement = createElement("img", location)
     newElement.src = src
     return newElement
 }
