@@ -1,6 +1,9 @@
 .ship1 {
     position: absolute;
-    /* transform: rotate(45deg); */
+    transform: rotate(170deg);
+    /* top: 100;
+    left: 100; */
+}
 
 body {
     background-color: #1e1e1e;
