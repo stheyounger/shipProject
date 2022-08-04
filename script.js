@@ -31,10 +31,10 @@ window.onload = () => {
         // console.log("xComputedrn: " + element.style.left)
         const style = getComputedStyle(element)
             // if (x <= window.innerWidth) {
-            element.style.left = parseInt(style.left) + x + "px"
+        element.style.left = parseInt(style.left) + x + "px"
             // }
             // if (y <= window.innerHeight) {
-            element.style.top = parseInt(style.top) + y + "px"
+        element.style.top = parseInt(style.top) + y + "px"
             // }
     }
 
@@ -110,32 +110,32 @@ window.onload = () => {
         const absHeadingToMouse = Math.abs(headingToMouse)
 
 
-        console.log("degreesToMouse: " + headingToMouse)
-        console.log("current angle : " + currentHeading)
+        // console.log("degreesToMouse: " + headingToMouse)
+        // console.log("current angle : " + currentHeading)
 
         // # 1 & 2
         if (getSign(currentHeading) != getSign(headingToMouse)) {
             if ((Math.abs(currentHeading) + Math.abs(headingToMouse)) < (360 - absCurrentHeading - absHeadingToMouse)) {
                 // #1
-                console.log("#1")
+                // console.log("#1")
 
                 return -getSign(currentHeading) * (Math.abs(currentHeading) + Math.abs(headingToMouse))
             } else {
                 // #2
-                console.log("#2")
+                // console.log("#2")
 
                 return getSign(currentHeading) * (360 - absCurrentHeading - absHeadingToMouse)
             }
         }
         // #3
         if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading < absHeadingToMouse) {
-            console.log("#3")
+            // console.log("#3")
 
             return headingToMouse - currentHeading
         }
         // #4
         if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading > absHeadingToMouse) {
-            console.log("#4")
+            // console.log("#4")
 
             return -(currentHeading - headingToMouse)
         }
@@ -157,6 +157,10 @@ window.onload = () => {
         }
     }
 
+    function halfToFullCircle(halfCircleDegrees) {
+        return (halfCircleDegrees + 360) % 360
+    }
+
     let mouseX = 0
     let mouseY = 0
     let endGameLoop = false
@@ -167,21 +171,10 @@ window.onload = () => {
 
     moveElement(ship1, 100, 100)
 
-    function calcMaxRateHeadingDelta(currentHeading, targetHeading, dt, degreesPerMili) {
-        const deltaHeading = angleDiff(currentHeading, targetHeading)
-
-        console.log("deltaHEading: " + deltaHeading)
-        const maxDegreesThisLoop = degreesPerMili * dt
-
-        const headingChange = coerceIn(-maxDegreesThisLoop, maxDegreesThisLoop, deltaHeading) //coerceIn(-5, 5, (halfToFullCircle(headingToMouse) - halfToFullCircle(getAngle(ship))) % 360)
-        return headingChange
-    }
-
     function updateShip(ship, target, dt) {
-        console.log("start iteration")
         const shipPos = getPositionAtCenter(ship)
 
-        const magnitude = 1 //coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
+        const magnitude = coerceIn(5, 13, .05 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
         const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
         const currentHeading = getAngle(ship)
@@ -189,23 +182,27 @@ window.onload = () => {
         const anglePerThisCycle = .09 * dt
         const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, smallestHeadingChange(currentHeading, headingToMouse))
 
-        // const newShipPos = calcVector(0, 0, magnitude, 90 + currentHeading + headingChange)
+        const shipPosAng = currentHeading + headingChange - 90
+        const newShipPos = calcVector(0, 0, magnitude, shipPosAng)
 
 
-        // moveElement(ship, newShipPos.x, newShipPos.y)
-        // setElementHeading(ship, headingToMouse)
+        // positionElement(ship, newShipPos.x, newShipPos.y)
+        moveElement(ship, newShipPos.x, newShipPos.y)
+
+        // setElementHeading(ship, currentHeading + headingChange)
         rotateElement(ship, headingChange)
 
-
-        // console.log("dt: " + dt)
-        // console.log("delta Heading: " + deltaHeading)
-        // console.log("magnitude: " + magnitude)
+        console.log('shipPosAng: ' + shipPosAng)
+        console.log("heading + change: " + (currentHeading + headingChange))
+            // console.log("dt: " + dt)
+            // console.log("delta Heading: " + deltaHeading)
+            // console.log("magnitude: " + magnitude)
         console.log("headingChange: " + headingChange)
         console.log("degreesToMouse: " + headingToMouse)
-        console.log("current angle : " + currentHeading)
-            // console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
-        console.log("shipPos: " + shipPos.x + ", " + shipPos.y)
-            // console.log("mouse pos: " + mouseX + ", " + mouseY)
+            // console.log("current angle : " + currentHeading)
+        console.log("newShipPos: " + newShipPos.x + ", " + newShipPos.y)
+            // console.log("shipPos: " + shipPos.x + ", " + shipPos.y)
+            // console.log("mouse pos: " + target.x + ", " + target.y)
     }
 
     gameLoop(100, (dt) => {
