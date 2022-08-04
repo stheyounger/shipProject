@@ -169,16 +169,6 @@ document.onkeydown = function(event) {
     }
 };
 
-// holler.onLoad(() => {
-//     holler.me(() => {
-//         holler.appInstance.notifyClients("hi cli")
-
-//         holler.onClientEvent((event) => {
-//             console.log("Recived: " + event)
-//         })
-//     })
-// })};
-
 window.onmousemove = function(event) {
     mouseY = event.clientY
     mouseX = event.clientX
