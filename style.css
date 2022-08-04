@@ -1,6 +1,6 @@
 .ship1 {
     position: absolute;
-    transform: rotate(170deg);
+    transform: rotate(-1deg);
     /* top: 100;
     left: 100; */
 }

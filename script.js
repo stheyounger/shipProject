@@ -46,7 +46,12 @@ window.onload = () => {
     //2215550100, 2215550101 - 197358  - James
 
     function setElementHeading(element, degrees) {
-        element.style.transform = "rotate(" + degrees + "deg)"
+        if (degrees < 1 && degrees > -1) {
+            console.log("Trying to set rotation to 0")
+            element.style.transform = "rotate(1deg)"
+        } else {
+            element.style.transform = "rotate(" + degrees + "deg)"
+        }
     }
 
     function rotateElement(element, degrees) {
