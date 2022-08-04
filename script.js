@@ -96,10 +96,6 @@ window.onload = () => {
         return degrees % 360
     }
 
-    // function angleDiff(a, b) {
-    //     return mod(((a - b) + 180), 360 - 180)
-    // }
-
     function getSign(number) {
         return number / Math.abs(number)
     }
