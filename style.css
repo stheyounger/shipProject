@@ -1,4 +1,7 @@
 .ship1 {
     position: absolute;
     /* transform: rotate(45deg); */
+
+body {
+    background-color: #1e1e1e;
 }
