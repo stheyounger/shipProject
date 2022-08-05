@@ -10,6 +10,7 @@ body {
 .startButton {
     margin-left: 45vw;
     border: none;
+    box-shadow: 5px 5px 4px black;
     border-radius: 20px;
     background-color: #c32828;
     height: 4vw;
