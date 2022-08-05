@@ -35,6 +35,18 @@ body {
     left: 1;
 }
 
+@-webkit-keyframes pulse {
+    0% {
+        box-shadow: 0 0 0px white;
+    }
+    50% {
+        box-shadow: 0 0 20px white;
+    }
+    100% {
+        box-shadow: 0 0 0px white;
+    }
+}
+
 .mouseFollower {
     position: absolute;
     left: 45vw;
@@ -44,4 +56,7 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    -webkit-animation-name: pulse;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 1s;
 }
