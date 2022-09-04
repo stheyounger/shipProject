@@ -9,7 +9,7 @@ class Ship {
         const pxPerMili = { min: 0.2, max: 1.3 }
         const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
-        const maxDegreePerMili = 0.2
+        const maxDegreePerMili = 0.3
         const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
         const currentHeading = this.element.getElementAngle()
         const anglePerThisCycle = maxDegreePerMili * dt

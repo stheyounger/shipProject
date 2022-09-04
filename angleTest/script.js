@@ -166,47 +166,55 @@ window.onload = () => {
         return headingChange
     }
 
+
     function smallestHeadingChange(currentHeading, headingToMouse) {
 
         const absCurrentHeading = Math.abs(currentHeading)
         const absHeadingToMouse = Math.abs(headingToMouse)
 
-        // # 1 & 2
-        if (getSign(currentHeading) != getSign(headingToMouse)) {
-            if ((Math.abs(currentHeading) + Math.abs(headingToMouse)) < (360 - absCurrentHeading - absHeadingToMouse)) {
-                // #1
-                // console.log("#1")
+        const diff = currentHeading - headingToMouse
+        return Math.atan2(Math.sin(diff), Math.cos(diff))
 
-                return -getSign(currentHeading) * (Math.abs(currentHeading) + Math.abs(headingToMouse))
-            } else {
-                // #2
-                // console.log("#2")
-
-                return getSign(currentHeading) * (360 - absCurrentHeading - absHeadingToMouse)
-            }
-        }
-        // #3
-        if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading < absHeadingToMouse) {
-            // console.log("#3")
-
-            return headingToMouse - currentHeading
-        }
-        // #4
-        if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading > absHeadingToMouse) {
-            // console.log("#4")
-
-            return -(currentHeading - headingToMouse)
-        }
-        // #5
-        if (absCurrentHeading == absHeadingToMouse)
-            return 0
-
+        // let a = currentHeading - headingToMouse
+        // a = mod((a + 180), 360 - 180)
+        // return a
 
         // console.log("degreesToMouse: " + headingToMouse)
         // console.log("current angle : " + currentHeading)
+
+        // // # 1 & 2
+        // if (getSign(currentHeading) != getSign(headingToMouse)) {
+        //     if ((Math.abs(currentHeading) + Math.abs(headingToMouse)) < (360 - absCurrentHeading - absHeadingToMouse)) {
+        //         // #1
+        //         // console.log("#1")
+
+        //         return -getSign(currentHeading) * (Math.abs(currentHeading) + Math.abs(headingToMouse))
+        //     } else {
+        //         // #2
+        //         // console.log("#2")
+
+        //         return getSign(currentHeading) * (360 - absCurrentHeading - absHeadingToMouse)
+        //     }
+        // }
+        // // #3
+        // if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading < absHeadingToMouse) {
+        //     // console.log("#3")
+
+        //     return headingToMouse - currentHeading
+        // }
+        // // #4
+        // if (getSign(currentHeading) == getSign(headingToMouse) && absCurrentHeading > absHeadingToMouse) {
+        //     // console.log("#4")
+
+        //     return -(currentHeading - headingToMouse)
+        // }
+        // // #5
+        // if (absCurrentHeading == absHeadingToMouse)
+        //     return 0
+
     }
 
-    console.log("headingChange: " + smallestHeadingChange(70, -100))
+    console.log("headingChange: " + smallestHeadingChange(-70, 100))
 
     document.onkeydown = function(event) {
 

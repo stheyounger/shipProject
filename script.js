@@ -22,18 +22,23 @@ window.onload = () => {
 
         const littleSound = new Audio('littleSound.mp3')
 
-        const ships = createShips(50)
+        const ships = createSwarm(50)
 
-        function createShips(number) {
+        function createShip() {
+            const newShipHtmlElement = createImage("ship.png", gamePage)
+            newShipHtmlElement.classList = "ship"
+
+            const shipElement = new Element(newShipHtmlElement)
+            return new Ship(shipElement)
+        }
+
+        function createSwarm(number) {
             const shipList = []
             for (let i = 1; i <= number; i++) {
-                const newShipHtmlElement = createImage("ship.png", gamePage)
-                const shipElement = new Element(newShipHtmlElement)
-                const ship = new Ship(shipElement)
+                const ship = createShip()
                 shipList.push(ship)
 
-                newShipHtmlElement.classList = "ship"
-                shipElement.positionElement(Math.random() * window.innerWidth + 1, Math.random() * window.innerHeight + 1)
+                ship.element.positionElement(Math.random() * window.innerWidth + 1, Math.random() * window.innerHeight + 1)
             }
             return shipList
         }
@@ -52,7 +57,7 @@ window.onload = () => {
                     // console.log("swarm positions: ", shipPositions)
                     const dataToSend = { username: myUsername, target: { x: mouseX, y: mouseY }, swarmPositions: shipPositions }
                         // console.log("data: ", dataToSend)
-//                     holler.appInstance.notifyClients(JSON.stringify(dataToSend))
+                        // holler.appInstance.notifyClients(JSON.stringify(dataToSend))
 
                     otherPlayers.forEach((playerData) => {
                         const target = playerData.target
@@ -134,32 +139,32 @@ window.onload = () => {
 
     const otherPlayers = []
 
-//     holler.onLoad(() => {
-//         holler.me((user) => {
-//             myUsername = user.name
-//             holler.appInstance.notifyClients("Hey i'm " + user.name)
+    holler.onLoad(() => {
+        holler.me((user) => {
+            myUsername = user.name
+            holler.appInstance.notifyClients("Hey i'm " + user.name)
 
 
-//             holler.onClientEvent((event) => {
-//                 console.log("Recived: " + event)
+            holler.onClientEvent((event) => {
+                console.log("Recived: " + event)
 
-//                 const dataRecived = JSON.parse(event)
+                const dataRecived = JSON.parse(event)
 
-//                 if (isntMe(dataRecived.username)) {
-//                     const thisPlayersDataEntry = otherPlayers.find((playerData) => {
-//                         playerData.username == dataRecived.undefined
-//                     })
+                if (isntMe(dataRecived.username)) {
+                    const thisPlayersDataEntry = otherPlayers.find((playerData) => {
+                        playerData.username == dataRecived.undefined
+                    })
 
-//                     if (thisPlayersDataEntry != "undefined") {
-//                         otherPlayers.push(dataRecived)
-//                     }
+                    if (thisPlayersDataEntry != "undefined") {
+                        otherPlayers.push(dataRecived)
+                    }
 
-//                     const thisPlayerDataEntryIndex = otherPlayers.indexOf(thisPlayersDataEntry)
-//                     otherPlayers[thisPlayerDataEntryIndex] = dataRecived
+                    const thisPlayerDataEntryIndex = otherPlayers.indexOf(thisPlayersDataEntry)
+                    otherPlayers[thisPlayerDataEntryIndex] = dataRecived
 
-//                     console.log("data recived: ", dataRecived)
-//                 }
-//             })
+                    console.log("data recived: ", dataRecived)
+                }
+            })
 
 
             startButton.onclick = () => {
@@ -167,7 +172,7 @@ window.onload = () => {
                 landingPage.remove()
                 startGame()
             }
-//         })
-//     })
+        })
+    })
 
 }
