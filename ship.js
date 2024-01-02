@@ -18,10 +18,15 @@ class Ship {
         const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, randSpeedMultiplyer * .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
         const maxDegreePerMili = 0.3
-        const randMaxDegreePerMiliOffset = (Math.random() / 3)
+        var randMaxDegreePerMiliOffset;
+        if (Math.random() > 0.85) 
+            randMaxDegreePerMiliOffset = maxDegreePerMili; 
+        else
+            randMaxDegreePerMiliOffset = 0;
+        
         const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
         const currentHeading = this.element.getElementAngle()
-        const anglePerThisCycle = (maxDegreePerMili + randMaxDegreePerMiliOffset) * dt
+        const anglePerThisCycle = (maxDegreePerMili - randMaxDegreePerMiliOffset) * dt
         const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, this.smallestHeadingChange(currentHeading, headingToMouse))
 
         const shipPosAng = currentHeading + headingChange - 90
