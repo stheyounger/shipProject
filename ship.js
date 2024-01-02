@@ -6,13 +6,16 @@ class Ship {
     persue(target, dt) {
         const shipPos = this.element.getPositionAtCenter()
 
+        const randSpeedOffset = Math.random() / 10
+        
         const pxPerMili = { min: 0.2, max: 1.3 }
-        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
+        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, (.07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y)) + randSpeedOffset)
 
         const maxDegreePerMili = 0.3
+        const randMaxDegreePerMiliOffset = (Math.random() / 3)
         const headingToMouse = fullToHalf(flipAngle(radToDeg(-Math.atan2(target.x - shipPos.x, target.y - shipPos.y))))
         const currentHeading = this.element.getElementAngle()
-        const anglePerThisCycle = maxDegreePerMili * dt
+        const anglePerThisCycle = (maxDegreePerMili + randMaxDegreePerMiliOffset) * dt
         const headingChange = coerceIn(-anglePerThisCycle, anglePerThisCycle, this.smallestHeadingChange(currentHeading, headingToMouse))
 
         const shipPosAng = currentHeading + headingChange - 90
