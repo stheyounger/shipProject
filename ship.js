@@ -6,10 +6,16 @@ class Ship {
     persue(target, dt) {
         const shipPos = this.element.getPositionAtCenter()
 
-        const randSpeedOffset = Math.random() / 10
+        var randSpeedMultiplyer;
+        if (Math.random() > 0.8) 
+            randSpeedMultiplyer = 2; 
+        else if (Math.random() > 0.8)
+            randSpeedMultiplyer = 0.5;
+        else
+            randSpeedMultiplyer = 1;
         
         const pxPerMili = { min: 0.2, max: 1.3 }
-        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, (.07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y)) + randSpeedOffset)
+        const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, randSpeedMultiplyer * .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
         const maxDegreePerMili = 0.3
         const randMaxDegreePerMiliOffset = (Math.random() / 3)
