@@ -48,7 +48,8 @@ window.onload = () => {
 
                     const shipPositions = []
                     ships.forEach((ship) => {
-                        ship.persue({ x: mouseX, y: mouseY }, dt)
+                        const offset = Math.random();
+                        ship.persue({ x: mouseX+offset, y: mouseY+offset }, dt)
                         const currentPosition = ship.element.getElementPosition()
                             // console.log("ship position: " + currentPosition.x + ", " + currentPosition.y)
                         shipPositions.push(currentPosition)
