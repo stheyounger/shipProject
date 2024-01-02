@@ -139,40 +139,40 @@ window.onload = () => {
 
     const otherPlayers = []
 
-    holler.onLoad(() => {
-        holler.me((user) => {
-            myUsername = user.name
-            holler.appInstance.notifyClients("Hey i'm " + user.name)
+    // holler.onLoad(() => {
+    //     holler.me((user) => {
+    //         myUsername = user.name
+    //         holler.appInstance.notifyClients("Hey i'm " + user.name)
 
 
-            holler.onClientEvent((event) => {
-                console.log("Recived: " + event)
+    //         holler.onClientEvent((event) => {
+    //             console.log("Recived: " + event)
 
-                const dataRecived = JSON.parse(event)
+    //             const dataRecived = JSON.parse(event)
 
-                if (isntMe(dataRecived.username)) {
-                    const thisPlayersDataEntry = otherPlayers.find((playerData) => {
-                        playerData.username == dataRecived.undefined
-                    })
+    //             if (isntMe(dataRecived.username)) {
+    //                 const thisPlayersDataEntry = otherPlayers.find((playerData) => {
+    //                     playerData.username == dataRecived.undefined
+    //                 })
 
-                    if (thisPlayersDataEntry != "undefined") {
-                        otherPlayers.push(dataRecived)
-                    }
+    //                 if (thisPlayersDataEntry != "undefined") {
+    //                     otherPlayers.push(dataRecived)
+    //                 }
 
-                    const thisPlayerDataEntryIndex = otherPlayers.indexOf(thisPlayersDataEntry)
-                    otherPlayers[thisPlayerDataEntryIndex] = dataRecived
+    //                 const thisPlayerDataEntryIndex = otherPlayers.indexOf(thisPlayersDataEntry)
+    //                 otherPlayers[thisPlayerDataEntryIndex] = dataRecived
 
-                    console.log("data recived: ", dataRecived)
-                }
-            })
+    //                 console.log("data recived: ", dataRecived)
+    //             }
+    //         })
 
 
-            startButton.onclick = () => {
-                gamePage.style.display = "block"
-                landingPage.remove()
-                startGame()
-            }
-        })
-    })
+    //         startButton.onclick = () => {
+    //             gamePage.style.display = "block"
+    //             landingPage.remove()
+    //             startGame()
+    //         }
+    //     })
+    // })
 
 }
