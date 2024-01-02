@@ -14,7 +14,7 @@ class Ship {
         else
             randSpeedMultiplyer = 1;
         
-        const pxPerMili = { min: 0.2, max: 1.3 }
+        const pxPerMili = { min: 0.15, max: 0.65 }
         const magnitude = coerceIn(pxPerMili.min * dt, pxPerMili.max * dt, randSpeedMultiplyer * .07 * pointDistance(shipPos.x, shipPos.y, target.x, target.y))
 
         const maxDegreePerMili = 0.3
