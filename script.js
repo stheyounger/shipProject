@@ -167,11 +167,11 @@ window.onload = () => {
     //         })
 
 
-    //         startButton.onclick = () => {
-    //             gamePage.style.display = "block"
-    //             landingPage.remove()
-    //             startGame()
-    //         }
+            startButton.onclick = () => {
+                gamePage.style.display = "block"
+                landingPage.remove()
+                startGame()
+            }
     //     })
     // })
 
